@@ -1,27 +1,43 @@
-import React from 'react';
+import { format } from 'date-fns';
 import WindArrow from './WindArrow';
 
+interface DayData {
+    valid_date: string;
+    max_temp: number;
+    min_temp: number;
+    precip: number;
+    wind_dir: number;
+    wind_spd: number;
+    weather: {
+      icon: string;
+    };
+  }
+  
+  interface DayProps {
+    day: DayData;
+    isFirst: boolean;
+  }
 
-function getDayOfWeek(dateString) {
+  function getDayOfWeek(dateString: string): string {
     const date = new Date(dateString);
-    return new Intl.DateTimeFormat('en-US', { weekday: 'short' }).format(date);
+    return format(date, 'eee');
 }
 
-function formatDayAndMonth(dateString) {
+function formatDayAndMonth(dateString: string): string {
     const date = new Date(dateString);
-    return `${date.getDate()} ${date.toLocaleString('en-US', { month: 'short' })}`;
+    return format(date, 'd MMM');
 }
 
-function getBackgroundColor(percentage) {
+function getBackgroundColor(percentage: number): string {
     if (percentage <= 10) return 'bg-green-500';
     if (percentage <= 50) return 'bg-yellow-500';
     return 'bg-red-500';
 }
 
-function Day({ day, isFirst }) {
+const Day: React.FC<DayProps> = ({ day, isFirst }) => {
     const decimalPrecip = day.precip;
     const percentagePrecip = Math.round(decimalPrecip * 100);
-    const bgColorClass = getBackgroundColor(percentagePrecip); // Get the appropriate background color
+    const bgColorClass = getBackgroundColor(percentagePrecip);
 
     return (
         <div className={`flex-grow flex-shrink max-w-28 py-10 rounded-large text-sm text-center ${isFirst ? 'bg-gradient-to-b from-custom-start to-custom-end active shadow-2xl' : ''}`}>

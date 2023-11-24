@@ -4,7 +4,15 @@ const API_ENDPOINT_CURRENT = "https://api.weatherbit.io/v2.0/current";
 const API_ENDPOINT_DAILY = "https://api.weatherbit.io/v2.0/forecast/daily";
 const API_KEY = import.meta.env.VITE_WEATHERBIT_API_KEY;
 
-export const fetchCurrentWeatherData = async (location) => {
+interface Location {
+  lat?: number;
+  lon?: number;
+  city?: string;
+  state?: string;
+  country?: string;
+}
+
+export const fetchCurrentWeatherData = async (location: Location) => {
     try {
         let endpoint = `${API_ENDPOINT_CURRENT}?key=${API_KEY}`;
 
@@ -27,7 +35,7 @@ export const fetchCurrentWeatherData = async (location) => {
     }
 };
 
-export const fetchDailyForecast = async (location, days=7) => {
+export const fetchDailyForecast = async (location: Location, days: number = 7) => {
     try {
         let endpoint = `${API_ENDPOINT_DAILY}?key=${API_KEY}&days=${days}`;
 

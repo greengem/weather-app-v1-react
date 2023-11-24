@@ -15,6 +15,11 @@ export interface CurrentWeatherData {
     rh: number;
     vis: number;
     aqi: number;
+    wind_spd: number;
+    wind_cdir?: string;
+    wind_dir: number;
+    sunrise: string;
+    sunset: string;
 }
 
 export interface ForecastData {

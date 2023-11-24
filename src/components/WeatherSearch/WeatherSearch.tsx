@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+interface WeatherSearchProps {
+  onSearch: (searchTerm: string) => void;
+}
 
-function WeatherSearch({ onSearch }) {
+const WeatherSearch: React.FC<WeatherSearchProps> = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearchClick = () => {
     onSearch(searchTerm);
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       handleSearchClick();
     }

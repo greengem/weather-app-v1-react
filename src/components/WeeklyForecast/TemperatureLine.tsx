@@ -1,6 +1,9 @@
-import React from 'react';
+interface TemperatureLineProps {
+  maxTempPathData: string;
+  minTempPathData: string;
+}
 
-function TemperatureLine({ maxTempPathData, minTempPathData }) {
+const TemperatureLine: React.FC<TemperatureLineProps> = ({ maxTempPathData, minTempPathData }) => {
   return (
     <svg style={{ top: "210px" }} className="absolute left-0 w-full" viewBox="0 0 700 150" preserveAspectRatio="none">
       <defs>
@@ -14,7 +17,7 @@ function TemperatureLine({ maxTempPathData, minTempPathData }) {
         </linearGradient>
       </defs>
       <path d={maxTempPathData} fill="none" stroke="url(#maxTempGradient)" strokeWidth="4" />
-      <path d={minTempPathData} fill="none" stroke="url(#minTempGradient)" strokeWidth="4" />
+      <path d={minTempPathData} fill="none" stroke="url(#minTempPathGradient)" strokeWidth="4" />
     </svg>
   );
 }

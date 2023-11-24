@@ -1,6 +1,8 @@
-import React from 'react';
+interface WindArrowProps {
+  direction: number;
+}
 
-function WindArrow({ direction }) {
+const WindArrow: React.FC<WindArrowProps> = ({ direction }) => {
   return (
     <svg 
       width="32" 
