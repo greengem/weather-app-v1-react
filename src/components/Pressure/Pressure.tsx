@@ -1,6 +1,8 @@
-import React from 'react';
+interface PressureProps {
+  data: number;
+}
 
-function Pressure({ data }) {
+function Pressure({ data }: PressureProps) {
   return (
     <div className="pressure-info todays-highlights-item">
       <h2 className='uppercase text-xs'>Pressure</h2>

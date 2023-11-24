@@ -1,6 +1,8 @@
-import React from 'react';
+interface HourlyForecastProps {
+  data: string;
+}
 
-function HourlyForecast({ data }) {
+function HourlyForecast({ data }: HourlyForecastProps) {
   return (
     <div className="hourlyforecast-info">
       <h2>Hourly Forecast</h2>

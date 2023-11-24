@@ -1,6 +1,8 @@
-import React from 'react';
+interface RainfallProps {
+  data: number;
+}
 
-function Rainfall({ data }) {
+function Rainfall({ data }: RainfallProps) {
   return (
     <div className="rainfall-info todays-highlights-item mb-5">
       <h2 className='uppercase text-xs'>Rainfall</h2>

@@ -1,8 +1,11 @@
-import React from 'react';
 import { IconDroplets } from '@tabler/icons-react';
 import InfoBox from '../Layout/InfoBox';
 
-function Humidity({ data }) {
+interface HumidityProps {
+  data: number;
+}
+
+function Humidity({ data }: HumidityProps) {
   return (
     <InfoBox title="Humidity" IconComponent={IconDroplets}>
       <p className='text-4xl'>{data}%</p>

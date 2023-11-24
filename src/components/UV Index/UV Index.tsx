@@ -1,8 +1,11 @@
-import React from 'react';
 import { IconSun } from '@tabler/icons-react';
 import InfoBox from '../Layout/InfoBox';
 
-function UVIndex({ data }) {
+interface UVIndexProps {
+  data: number;
+}
+
+function UVIndex({ data }: UVIndexProps) {
   const roundedUV = Math.round(data);
   const uvPercentage = (roundedUV / 11) * 100;
   
@@ -22,8 +25,8 @@ function UVIndex({ data }) {
           role="progressbar" 
           style={{ width: `${uvPercentage}%` }}
           aria-valuenow={roundedUV} 
-          aria-valuemin="0" 
-          aria-valuemax="11">
+          aria-valuemin={0} 
+          aria-valuemax={11}>
         </div>
       </div>
     </InfoBox>

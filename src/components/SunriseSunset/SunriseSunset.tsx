@@ -1,8 +1,14 @@
-import React from 'react';
 import { IconSunrise } from '@tabler/icons-react';
 import InfoBox from '../Layout/InfoBox';
 
-function SunriseSunset({ data }) {
+interface SunriseSunsetProps {
+  data: {
+    sunrise: string;
+    sunset: string;
+  };
+}
+
+function SunriseSunset({ data }: SunriseSunsetProps) {
   return (
     <InfoBox title="Sunrise & Sunset" IconComponent={IconSunrise}>
       <p>Sunrise: {data.sunrise}</p>
@@ -10,6 +16,5 @@ function SunriseSunset({ data }) {
     </InfoBox>
   );
 }
-
 
 export default SunriseSunset;
