@@ -26,12 +26,13 @@ export const fetchCurrentWeatherData = async (location: Location) => {
 
         const response = await fetch(endpoint);
 
-        if (response.status === 429) return mockWeatherData.current;
-        if (!response.ok) throw new Error();
-        return await response.json();
+        if (response.status === 429 || !response.ok) {
+            return { data: mockWeatherData.current, isMock: true };
+        }
+        return { data: await response.json(), isMock: false };
 
     } catch {
-        return mockWeatherData.current;
+        return { data: mockWeatherData.current, isMock: true };
     }
 };
 
@@ -49,11 +50,13 @@ export const fetchDailyForecast = async (location: Location, days: number = 7) =
 
         const response = await fetch(endpoint);
 
-        if (response.status === 429) return mockWeatherData.daily;
-        if (!response.ok) throw new Error();
-        return await response.json();
+        if (response.status === 429 || !response.ok) {
+            return { data: mockWeatherData.daily, isMock: true };
+        }
+        return { data: await response.json(), isMock: false };
 
     } catch {
-        return mockWeatherData.daily;
+        return { data: mockWeatherData.daily, isMock: true };
     }
 };
+
