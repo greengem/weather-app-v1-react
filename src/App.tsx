@@ -73,20 +73,18 @@ function App() {
   }
 
   return (
-    <div className="mx-auto max-w-screen-lg">
+    <div className='bg-gradient-to-br from-gray-900 to-gray-800'>
       {weatherData.usingMockData && <div className="mock-data-warning">Displaying Mock Data</div>}
-      <div className='container mx-auto bg-gradient-to-br from-gray-900 to-gray-800 shadow-2xl sm:rounded-2xl mt-0 sm:mt-10'>
-        <WeatherSearch onSearch={handleLocationSearch} />
-        <CurrentWeatherHeader data={weatherData.current} />
-        <div className='grid grid-cols-1 md:grid-cols-6'>
+      <div className='grid grid-cols-1 md:grid-cols-6 max-w-screen-lg mx-auto'>
           <div className='px-4 pt-4 sm:px-10 sm:pt-10 dailyforecast-info col-span-2'>
+            <WeatherSearch onSearch={handleLocationSearch} />
+            <CurrentWeatherHeader data={weatherData.current} />
             <WeatherDetails data={weatherData.current} />
           </div>
           <div className='col-span-4'>
             <WeeklyForecast data={weatherData.forecast} />
             <TodayHighlights data={weatherData.current} />
           </div>
-        </div>
       </div>
     </div>
   );
