@@ -27,10 +27,15 @@ const WeeklyForecast: React.FC<WeeklyForecastProps> = ({ data }) => {
     .domain([minTemp - 2, maxTemp + 2])
     .range([150, 0]);
 
-  const createLineGenerator = () => d3.line<[number, number]>()
-    .x((_, i) => i * (700 / data.length))
-    .y(d => yScale(d[1]))
-    .curve(d3.curveMonotoneX);
+    const totalWidth = 461;
+    const createLineGenerator = () => d3.line<[number, number]>()
+      .x((_, i) => i * (totalWidth / (data.length - 1)))
+      .y(d => yScale(d[1]))
+      .curve(d3.curveMonotoneX);
+    
+    
+
+
 
   const maxTempLineGenerator = createLineGenerator();
   const minTempLineGenerator = createLineGenerator();
@@ -39,9 +44,10 @@ const WeeklyForecast: React.FC<WeeklyForecastProps> = ({ data }) => {
   const minTempPathData = minTempLineGenerator(data.map((d, i) => [i, d.min_temp])) || '';
 
   return (
-    <div className="weeklyforecast-info relative">
-      <div className="flex pt-4 px-4 sm:px-10 sm:pt-10 pb-0 mx-auto">
-        {data.slice(0, 5).map((day, index) => (
+    <div className="w-[461px] weeklyforecast-info relative mx-auto bg-green-500 overflow-x-scroll mt-5">
+      <div className="grid grid-cols-6">
+        
+        {data.slice(0, 6).map((day, index) => (
           <Day day={day} isFirst={index === 0} key={day.valid_date} />
         ))}
         <TemperatureLine 
