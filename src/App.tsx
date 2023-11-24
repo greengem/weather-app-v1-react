@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react';
 import { fetchCurrentWeatherData, fetchDailyForecast } from './utils/WeatherService';
+import { WeatherData, CurrentWeatherData } from '../types/weatherTypes';
+import { SearchParams } from '../types/searchTypes';
+import { format } from 'date-fns';
+
 import mockWeatherData from './utils/mockData';
 
 import WeeklyForecast from './components/WeeklyForecast/WeeklyForecast';
@@ -15,100 +19,10 @@ import WeatherSearch from './components/WeatherSearch/WeatherSearch';
 import SunriseSunset from './components/SunriseSunset/SunriseSunset';
 import AirPollution from './components/AirPollution/AirPollution';
 
-interface CurrentWeatherData {
-  city_name: string;
-  country_code: string;
-  temp: number;
-  app_temp: number;
-  precip: number;
-  pres: number;
-  uv: number;
-  rh: number;
-  vis: number;
-  aqi: number;
-}
-
-interface ForecastData {
-  valid_date: string;
-  wind_spd: number;
-  wind_dir: number;
-  temp: number;
-  max_temp: number;
-  min_temp: number;
-  high_temp: number;
-  low_temp: number;
-  app_max_temp: number;
-  app_min_temp: number;
-  pop: number;
-  precip: number;
-  snow: number;
-  snow_depth: number;
-  slp: number;
-  pres: number;
-  dewpt: number;
-  rh: number;
-  weather: {
-    icon: string;
-    code: string;
-    description: string;
-  };
-  clouds_low: number;
-  clouds_mid: number;
-  clouds_hi: number;
-  clouds: number;
-  vis: number;
-  max_dhi: number;
-  uv: number;
-  moon_phase: number;
-  moon_phase_lunation: number;
-  moonrise_ts: number;
-  moonset_ts: number;
-  sunrise_ts: number;
-  sunset_ts: number;
-}
-
-
-
-interface WeatherData {
-  current: CurrentWeatherData | null;
-  forecast: ForecastData[] | null;
-  usingMockData: boolean;
-}
-
-interface SearchParams {
-  city?: string;
-  state?: string;
-  country?: string;
-  lat?: number;
-  lon?: number;
-}
-
-interface CurrentWeatherHeaderProps {
-  data: CurrentWeatherData;
-}
-
-interface WeatherDetailsProps {
-  data: CurrentWeatherData;
-}
-
-interface TodayHighlightsProps {
-  data: CurrentWeatherData;
-}
-
-
 function getFormattedDate(): string {
-  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  
   const today = new Date();
-  
-  const dayName = days[today.getDay()];
-  const monthName = months[today.getMonth()];
-  const date = today.getDate();
-  
-  return `${dayName}, ${date} ${monthName}`;
+  return format(today, 'EEEE, d MMM');
 }
-
 
 function App() {
   const [weatherData, setWeatherData] = useState<WeatherData>({ current: null, forecast: null, usingMockData: false });
@@ -159,7 +73,7 @@ function App() {
   }
 
   return (
-    <div className="App mx-auto max-w-screen-lg">
+    <div className="mx-auto max-w-screen-lg">
       {weatherData.usingMockData && <div className="mock-data-warning">Displaying Mock Data</div>}
       <div className='container mx-auto bg-gradient-to-br from-gray-900 to-gray-800 shadow-2xl sm:rounded-2xl mt-0 sm:mt-10'>
         <WeatherSearch onSearch={handleLocationSearch} />
@@ -178,7 +92,7 @@ function App() {
   );
 }
 
-function CurrentWeatherHeader({ data }: CurrentWeatherHeaderProps) {
+function CurrentWeatherHeader({ data }: { data: CurrentWeatherData }) {
   return (
     <>
       <h1 className='font-semibold text-4xl mb-1'>{data.city_name}, {data.country_code}</h1>
@@ -187,7 +101,7 @@ function CurrentWeatherHeader({ data }: CurrentWeatherHeaderProps) {
   );
 }
 
-function WeatherDetails({ data }: WeatherDetailsProps) {
+function WeatherDetails({ data }: { data: CurrentWeatherData }) {
   return (
     <>
       <CurrentWeather data={data.temp} />
@@ -200,7 +114,7 @@ function WeatherDetails({ data }: WeatherDetailsProps) {
   );
 }
 
-function TodayHighlights({ data }: TodayHighlightsProps) {
+function TodayHighlights({ data }: { data: CurrentWeatherData }) {
   return (
     <div className='col-span-3 row-span-2 p-4 sm:p-10  dailyforecastsummary-info'>
       <h4 className='font-semibold text-lg mb-3'>Today's Highlights</h4>
