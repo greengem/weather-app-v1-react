@@ -4,9 +4,9 @@ import { WeatherData, CurrentWeatherData } from '../types/weatherTypes';
 import { SearchParams } from '../types/searchTypes';
 import { format } from 'date-fns';
 
-import mockWeatherData from './utils/mockData';
-
 import WeeklyForecast from './components/WeeklyForecast/WeeklyForecast';
+import CurrentWeather from './components/CurrentWeather/CurrentWeather';
+
 import Wind from './components/Wind/Wind';
 import Humidity from './components/Humidity/Humidity';
 import Visibility from './components/Visibility/Visibility';
@@ -14,7 +14,6 @@ import UVIndex from './components/UV Index/UV Index';
 import Rainfall from './components/Rainfall/Rainfall';
 import Pressure from './components/Pressure/Pressure';
 import FeelsLike from './components/FeelsLike/FeelsLike';
-import CurrentWeather from './components/CurrentWeather/CurrentWeather';
 import WeatherSearch from './components/WeatherSearch/WeatherSearch';
 import SunriseSunset from './components/SunriseSunset/SunriseSunset';
 import AirPollution from './components/AirPollution/AirPollution';
@@ -40,26 +39,25 @@ function App() {
     fetchData(searchParams);
   }
 
+
   const fetchData = async (searchParams: SearchParams) => {
     try {
-      const [currentWeather, dailyForecast] = await Promise.all([
+      const [currentWeatherResult, dailyForecastResult] = await Promise.all([
         fetchCurrentWeatherData(searchParams),
         fetchDailyForecast(searchParams)
       ]);
-      
+  
       setWeatherData({
-        current: currentWeather.data[0],
-        forecast: dailyForecast.data,
-        usingMockData: false
+        current: currentWeatherResult.data.data[0],
+        forecast: dailyForecastResult.data.data,
+        usingMockData: currentWeatherResult.isMock || dailyForecastResult.isMock
       });
     } catch (error: any) {
-      setWeatherData({
-        current: mockWeatherData.current.data[0],
-        forecast: mockWeatherData.daily.data,
-        usingMockData: true
-      });
+      // Handle unexpected errors
     }
   };
+  
+  
   
 
   useEffect(() => {
@@ -74,17 +72,18 @@ function App() {
 
   return (
     <div className='bg-gradient-to-br from-gray-900 to-gray-800'>
-      {weatherData.usingMockData && <div className="mock-data-warning">Displaying Mock Data</div>}
-      <div className='grid grid-cols-1 md:grid-cols-6 max-w-screen-lg mx-auto'>
-          <div className='px-4 pt-4 sm:px-10 sm:pt-10 dailyforecast-info col-span-2'>
+      {weatherData.usingMockData && <div className="bg-red-500 hidden text-xs rounded-md px-2 py-1 absolute top-5 right-5">Displaying Mock Data</div>}
+      <div className='grid grid-cols-1 md:grid-cols-5'>
+          <div className='px-4 pt-4 dailyforecast-info col-span-1 bg-blue-800'>
             <WeatherSearch onSearch={handleLocationSearch} />
             <CurrentWeatherHeader data={weatherData.current} />
             <WeatherDetails data={weatherData.current} />
           </div>
-          <div className='col-span-4'>
+          <div className='col-span-3 bg-gray-500'>
             <WeeklyForecast data={weatherData.forecast} />
             <TodayHighlights data={weatherData.current} />
           </div>
+          <div className='bg-blue-500 col-span-1'>Right Sidebar</div>
       </div>
     </div>
   );
@@ -103,7 +102,7 @@ function WeatherDetails({ data }: { data: CurrentWeatherData }) {
   return (
     <>
       <CurrentWeather data={data.temp} />
-      <div className='grid grid-cols-3 lg:grid-cols-1'>
+      <div className='grid grid-cols-3 md:grid-cols-1'>
         <FeelsLike data={data.app_temp} />
         <Rainfall data={data.precip} />
         <Pressure data={data.pres} />
