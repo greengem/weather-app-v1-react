@@ -1,5 +1,3 @@
-import React from 'react';
-
 function CurrentWeather({ data }) {
   return (
     <div className="currentweather-info mb-10">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { fetchCurrentWeatherData, fetchDailyForecast } from './utils/WeatherService';
 import mockWeatherData from './utils/mockData';
 
@@ -15,7 +15,88 @@ import WeatherSearch from './components/WeatherSearch/WeatherSearch';
 import SunriseSunset from './components/SunriseSunset/SunriseSunset';
 import AirPollution from './components/AirPollution/AirPollution';
 
-function getFormattedDate() {
+interface CurrentWeatherData {
+  city_name: string;
+  country_code: string;
+  temp: number;
+  app_temp: number;
+  precip: number;
+  pres: number;
+  uv: number;
+  rh: number;
+  vis: number;
+  aqi: number;
+}
+
+interface ForecastData {
+  valid_date: string;
+  wind_spd: number;
+  wind_dir: number;
+  temp: number;
+  max_temp: number;
+  min_temp: number;
+  high_temp: number;
+  low_temp: number;
+  app_max_temp: number;
+  app_min_temp: number;
+  pop: number;
+  precip: number;
+  snow: number;
+  snow_depth: number;
+  slp: number;
+  pres: number;
+  dewpt: number;
+  rh: number;
+  weather: {
+    icon: string;
+    code: string;
+    description: string;
+  };
+  clouds_low: number;
+  clouds_mid: number;
+  clouds_hi: number;
+  clouds: number;
+  vis: number;
+  max_dhi: number;
+  uv: number;
+  moon_phase: number;
+  moon_phase_lunation: number;
+  moonrise_ts: number;
+  moonset_ts: number;
+  sunrise_ts: number;
+  sunset_ts: number;
+}
+
+
+
+interface WeatherData {
+  current: CurrentWeatherData | null;
+  forecast: ForecastData[] | null;
+  usingMockData: boolean;
+}
+
+interface SearchParams {
+  city?: string;
+  state?: string;
+  country?: string;
+  lat?: number;
+  lon?: number;
+}
+
+interface CurrentWeatherHeaderProps {
+  data: CurrentWeatherData;
+}
+
+interface WeatherDetailsProps {
+  data: CurrentWeatherData;
+}
+
+interface TodayHighlightsProps {
+  data: CurrentWeatherData;
+}
+
+
+function getFormattedDate(): string {
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   
@@ -30,10 +111,10 @@ function getFormattedDate() {
 
 
 function App() {
-  const [weatherData, setWeatherData] = useState({ current: null, forecast: null, usingMockData: false });
+  const [weatherData, setWeatherData] = useState<WeatherData>({ current: null, forecast: null, usingMockData: false });
 
-  const handleLocationSearch = (location) => {
-    const searchParams = {};
+  const handleLocationSearch = (location: string) => {
+    const searchParams: SearchParams = {};
     if (location.includes(',')) {
       const [city, state, country] = location.split(',').map(param => param.trim());
       searchParams.city = city;
@@ -45,7 +126,7 @@ function App() {
     fetchData(searchParams);
   }
 
-  const fetchData = async (searchParams) => {
+  const fetchData = async (searchParams: SearchParams) => {
     try {
       const [currentWeather, dailyForecast] = await Promise.all([
         fetchCurrentWeatherData(searchParams),
@@ -57,55 +138,82 @@ function App() {
         forecast: dailyForecast.data,
         usingMockData: false
       });
-    } catch (error) {
+    } catch (error: any) {
       setWeatherData({
         current: mockWeatherData.current.data[0],
-        forecast: mockWeatherData.forecast.data,
+        forecast: mockWeatherData.daily.data,
         usingMockData: true
       });
     }
   };
+  
 
   useEffect(() => {
-    fetchData({ lat: 51.5074, lon: -0.1278 });
+    const defaultLocation = { lat: 51.5074, lon: -0.1278 };
+    fetchData(defaultLocation);
   }, []);
+  
 
-  if (!weatherData.current || !weatherData.forecast) return <div>Loading...</div>;
+  if (!weatherData.current || !weatherData.forecast) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="App mx-auto max-w-screen-lg">
       {weatherData.usingMockData && <div className="mock-data-warning">Displaying Mock Data</div>}
       <div className='container mx-auto bg-gradient-to-br from-gray-900 to-gray-800 shadow-2xl sm:rounded-2xl mt-0 sm:mt-10'>
+        <WeatherSearch onSearch={handleLocationSearch} />
+        <CurrentWeatherHeader data={weatherData.current} />
         <div className='grid grid-cols-1 md:grid-cols-6'>
-          <div className='px-4 pt-4 sm:px-10 sm:pt-10 dailyforecast-info col-span-2' >
-          <WeatherSearch onSearch={handleLocationSearch} />
-            <h1 className='font-semibold text-4xl mb-1 '>{weatherData.current.city_name}, {weatherData.current.country_code}</h1>
-            <p className='text-xs text-gray-400 mb-5'>{getFormattedDate()}</p>
-            <CurrentWeather data={weatherData.current.temp} />
-            <div className='grid grid-cols-3 lg:grid-cols-1'>
-            <FeelsLike data={weatherData.current.app_temp} />
-            <Rainfall data={weatherData.current.precip} />
-            <Pressure data={weatherData.current.pres} />
-            </div>
+          <div className='px-4 pt-4 sm:px-10 sm:pt-10 dailyforecast-info col-span-2'>
+            <WeatherDetails data={weatherData.current} />
+          </div>
+          <div className='col-span-4'>
+            <WeeklyForecast data={weatherData.forecast} />
+            <TodayHighlights data={weatherData.current} />
+          </div>
         </div>
-        <div className='col-span-4'>
-          <WeeklyForecast data={weatherData.forecast} />
-          <div className='col-span-3 row-span-2 p-4 sm:p-10  dailyforecastsummary-info'>
-                <h4 className='font-semibold text-lg mb-3'>Today's Highlights</h4>
-                <div className='grid grid-cols-2 md:grid-cols-3 grid-rows-2 gap-4'>
-                  <UVIndex data={weatherData.current.uv} />
-                  <Wind data={weatherData.current} />
-                  <SunriseSunset data={weatherData.current} />
-                  <Humidity data={weatherData.current.rh} />
-                  <Visibility data={weatherData.current.vis} />
-                  <AirPollution data={weatherData.current.aqi} />
-                </div>
-              </div>
-        </div>
-      </div>
       </div>
     </div>
   );
 }
 
-export default App;
+function CurrentWeatherHeader({ data }: CurrentWeatherHeaderProps) {
+  return (
+    <>
+      <h1 className='font-semibold text-4xl mb-1'>{data.city_name}, {data.country_code}</h1>
+      <p className='text-xs text-gray-400 mb-5'>{getFormattedDate()}</p>
+    </>
+  );
+}
+
+function WeatherDetails({ data }: WeatherDetailsProps) {
+  return (
+    <>
+      <CurrentWeather data={data.temp} />
+      <div className='grid grid-cols-3 lg:grid-cols-1'>
+        <FeelsLike data={data.app_temp} />
+        <Rainfall data={data.precip} />
+        <Pressure data={data.pres} />
+      </div>
+    </>
+  );
+}
+
+function TodayHighlights({ data }: TodayHighlightsProps) {
+  return (
+    <div className='col-span-3 row-span-2 p-4 sm:p-10  dailyforecastsummary-info'>
+      <h4 className='font-semibold text-lg mb-3'>Today's Highlights</h4>
+      <div className='grid grid-cols-2 md:grid-cols-3 grid-rows-2 gap-4'>
+        <UVIndex data={data.uv} />
+        <Wind data={data} />
+        <SunriseSunset data={data} />
+        <Humidity data={data.rh} />
+        <Visibility data={data.vis} />
+        <AirPollution data={data.aqi} />
+      </div>
+    </div>
+  );
+}
+
+export default App

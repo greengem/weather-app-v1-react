@@ -1,4 +1,3 @@
-import React from 'react';
 import { IconTrees } from '@tabler/icons-react';
 import InfoBox from '../Layout/InfoBox';
 

@@ -1,5 +1,3 @@
-import React from 'react';
-
 function FeelsLike({ data }) {
   return (
     <div className="feelslike-info todays-highlights-item mb-5">
