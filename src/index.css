@@ -12,3 +12,7 @@
       scrollbar-width: none;
   }
 }
+
+html {
+  @apply bg-gradient-to-br from-gray-900 to-gray-800 text-white min-h-screen;
+}
