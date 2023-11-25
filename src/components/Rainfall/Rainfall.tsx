@@ -4,7 +4,7 @@ interface RainfallProps {
 
 function Rainfall({ data }: RainfallProps) {
   return (
-    <div className="rainfall-info todays-highlights-item mb-5">
+    <div className="rainfall-info todays-highlights-item">
       <h2 className='uppercase text-xs'>Rainfall</h2>
       <p>{data} mm</p>
     </div>

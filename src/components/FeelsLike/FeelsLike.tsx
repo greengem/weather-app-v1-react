@@ -4,7 +4,7 @@ interface FeelsLikeProps {
 
 function FeelsLike({ data }: FeelsLikeProps) {
   return (
-    <div className="feelslike-info todays-highlights-item mb-5">
+    <div className="feelslike-info todays-highlights-item">
       <h2 className='text-xs uppercase'>Feels Like</h2>
       <p>{data}°C</p>
     </div>

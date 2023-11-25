@@ -68,7 +68,7 @@ function App() {
 
   return (
     <>
-    <nav className='nav bg-gray-900 border-b-2 border-gray-800 px-5 py-4 text-white shadow-md flex items-center justify-between'>
+    <nav className='hidden bg-gray-900 border-b-2 border-gray-800 px-5 py-4 text-white shadow-md flex items-center justify-between mb-0 lg:mb-10'>
       <p className='tracking-tight font-semibold text-xl'>WeatherApp</p>
       <div className='flex gap-2'>
         <WeatherSearch onSearch={handleLocationSearch} />
@@ -76,7 +76,7 @@ function App() {
     </nav>
     <div className='h-100 w-100 text-white'>
       {weatherData.usingMockData && <div className="bg-red-500 hidden text-xs rounded-md px-2 py-1 absolute top-5 right-5">Displaying Mock Data</div>}
-      <div className='grid grid-cols-1 lg:grid-cols-5 justify-center items-center'>
+      <div className='grid grid-cols-1 lg:grid-cols-5 '>
           <div className='p-3 lg:p-5 dailyforecast-info col-span-1 lg:text-right'>
             <CurrentWeatherHeader data={weatherData.current} />
             <WeatherDetails data={weatherData.current} />
@@ -96,9 +96,7 @@ function App() {
 function CurrentWeatherHeader({ data }: { data: CurrentWeatherData }) {
   return (
     <>
-      <h1 className='font-semibold text-4xl'>{data.city_name}</h1>
-      <h1>{data.country_code}</h1>
-      <p className='text-xs text-gray-500'>{getFormattedDate()}</p>
+      <h1 className='font-semibold text-4xl'>{data.city_name}, {data.country_code}</h1>
     </>
   );
 }
