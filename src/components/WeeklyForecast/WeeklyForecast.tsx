@@ -2,7 +2,6 @@ import * as d3 from 'd3';
 import Day from './Day';
 import TemperatureLine from './TemperatureLine';
 
-// Make sure this interface matches with the one expected in Day.tsx
 interface DayData {
   min_temp: number;
   max_temp: number;
@@ -23,9 +22,12 @@ const WeeklyForecast: React.FC<WeeklyForecastProps> = ({ data }) => {
   const minTemp = d3.min(data, d => d.min_temp) ?? 0;
   const maxTemp = d3.max(data, d => d.max_temp) ?? 0;
 
+  const padding = 10;
   const yScale = d3.scaleLinear()
-    .domain([minTemp - 2, maxTemp + 2])
+    .domain([minTemp - padding, maxTemp + padding])
     .range([150, 0]);
+  
+
 
     const totalWidth = 461;
     const createLineGenerator = () => d3.line<[number, number]>()
@@ -44,9 +46,9 @@ const WeeklyForecast: React.FC<WeeklyForecastProps> = ({ data }) => {
   const minTempPathData = minTempLineGenerator(data.map((d, i) => [i, d.min_temp])) || '';
 
   return (
-    <div className="w-[461px] weeklyforecast-info relative mx-auto bg-green-500 overflow-x-scroll mt-5">
+    <div className='overflow-x-scroll no-scrollbar mt-5'>
+    <div className="w-[461px] weeklyforecast-info relative mx-auto">
       <div className="grid grid-cols-6">
-        
         {data.slice(0, 6).map((day, index) => (
           <Day day={day} isFirst={index === 0} key={day.valid_date} />
         ))}
@@ -55,6 +57,7 @@ const WeeklyForecast: React.FC<WeeklyForecastProps> = ({ data }) => {
           minTempPathData={minTempPathData} 
         />
       </div>
+    </div>
     </div>
   );
 }
