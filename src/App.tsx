@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { fetchCurrentWeatherData, fetchDailyForecast } from './utils/WeatherService';
 import { WeatherData, CurrentWeatherData } from '../types/weatherTypes';
 import { SearchParams } from '../types/searchTypes';
-import { format } from 'date-fns';
 
 import WeeklyForecast from './components/WeeklyForecast/WeeklyForecast';
 import CurrentWeather from './components/CurrentWeather/CurrentWeather';
@@ -17,11 +16,6 @@ import FeelsLike from './components/FeelsLike/FeelsLike';
 import WeatherSearch from './components/WeatherSearch/WeatherSearch';
 import SunriseSunset from './components/SunriseSunset/SunriseSunset';
 import AirPollution from './components/AirPollution/AirPollution';
-
-function getFormattedDate(): string {
-  const today = new Date();
-  return format(today, 'EEEE, d MMM');
-}
 
 function App() {
   const [weatherData, setWeatherData] = useState<WeatherData>({ current: null, forecast: null, usingMockData: false });
@@ -68,12 +62,13 @@ function App() {
 
   return (
     <>
+    {/*}
     <nav className='hidden bg-gray-900 border-b-2 border-gray-800 px-5 py-4 text-white shadow-md flex items-center justify-between mb-0 lg:mb-10'>
       <p className='tracking-tight font-semibold text-xl'>WeatherApp</p>
       <div className='flex gap-2'>
         <WeatherSearch onSearch={handleLocationSearch} />
       </div>
-    </nav>
+  </nav>*/}
     <div className='h-100 w-100 text-white'>
       {weatherData.usingMockData && <div className="bg-red-500 hidden text-xs rounded-md px-2 py-1 absolute top-5 right-5">Displaying Mock Data</div>}
       <div className='grid grid-cols-1 lg:grid-cols-5 '>
