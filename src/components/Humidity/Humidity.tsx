@@ -8,7 +8,7 @@ interface HumidityProps {
 function Humidity({ data }: HumidityProps) {
   return (
     <InfoBox title="Humidity" IconComponent={IconDroplets}>
-      <p className='text-4xl'>{data}%</p>
+      <p className='text-xl'>{data}%</p>
     </InfoBox>
   );
 }

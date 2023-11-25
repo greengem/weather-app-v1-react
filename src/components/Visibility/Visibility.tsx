@@ -8,7 +8,7 @@ interface VisibilityProps {
 function Visibility({ data }: VisibilityProps) {
   return (
     <InfoBox title="Visibility" IconComponent={IconEye}>
-      <p className='text-4xl'>{data} mi</p>
+      <p className='text-xl'>{data} mi</p>
     </InfoBox>
   );
 }
