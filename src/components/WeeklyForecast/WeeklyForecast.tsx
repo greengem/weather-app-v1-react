@@ -46,7 +46,7 @@ const WeeklyForecast: React.FC<WeeklyForecastProps> = ({ data }) => {
   const minTempPathData = minTempLineGenerator(data.map((d, i) => [i, d.min_temp])) || '';
 
   return (
-    <div className='overflow-x-scroll no-scrollbar mt-5'>
+    <div className='overflow-x-scroll no-scrollbar p-5'>
     <div className="w-[461px] weeklyforecast-info relative mx-auto">
       <div className="grid grid-cols-6">
         {data.slice(0, 6).map((day, index) => (
