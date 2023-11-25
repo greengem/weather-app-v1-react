@@ -45,43 +45,48 @@ function App() {
     <>
       <div className='h-100 w-100 text-white'>
         <CurrentWeatherHeader data={weatherData.current} />
-        <div className='grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 p-3 md:p-20 gap-5'>
-          <Card title='Daily weatehr overview text' icon={<IconSun size={16} />} className='row-span-1 col-span-4'>
+        <div className='
+          max-w-screen-xl mx-auto
+          grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 
+          p-4 md:p-5 
+          gap-4 md:gap-5
+        '>
+          <Card title='Daily weatehr overview text' icon={<IconSun size={16} />} className='md:col-span-4'>
             <HourlyForecast data={weatherData.hourly} />
           </Card>
-          <Card title='Precipitation' icon={<IconUmbrella size={16} />} className='row-span-2 col-span-2'>
+          <Card title='Precipitation' icon={<IconUmbrella size={16} />} className='md:row-span-2 md:col-span-2'>
               PRECIP MAP
           </Card>
-          <Card title='10-Day Forecast' icon={<IconCalendar size={16} />} className='row-span-3 col-span-2'>
+          <Card title='10-Day Forecast' icon={<IconCalendar size={16} />} className='md:row-span-3 md:col-span-2'>
             <WeeklyForecast data={weatherData.forecast} />
           </Card>
-          <Card title='Air Pollution' icon={<IconGrain size={16} />} className='row-span-1 col-span-2'>
+          <Card title='Air Pollution' icon={<IconGrain size={16} />} className='md:col-span-2'>
             <p className='text-xl'>{weatherData.current.aqi}</p>
           </Card>
-          <Card title='UV Index' icon={<IconSun size={16} />} className='row-span-1 col-span-1'>
+          <Card title='UV Index' icon={<IconSun size={16} />}>
             <UVIndex data={weatherData.current.uv} />
           </Card>
-          <Card title='Sunset' icon={<IconSunrise size={16} />} className='row-span-1 col-span-1'>
+          <Card title='Sunset' icon={<IconSunrise size={12} />}>
             <p>Sunrise: {weatherData.current.sunrise}</p>
             <p>Sunset: {weatherData.current.sunset}</p>
           </Card>
-          <Card title='Wind' icon={<IconWind size={16} />} className='row-span-1 col-span-1'>
+          <Card title='Wind' icon={<IconWind size={16} />}>
             <p>Speed: {weatherData.current.wind_spd} m/s</p>
             <p>Direction: {weatherData.current.wind_dir}°</p>
           </Card>
-          <Card title='Precipitation' icon={<IconDropletFilled size={16} />} className='row-span-1 col-span-1'>
+          <Card title='Precipitation' icon={<IconDropletFilled size={16} />}>
             <p>{weatherData.current.precip} mm</p>
           </Card>
-          <Card title='Feels Like' icon={<IconTemperature size={16} />} className='row-span-1 col-span-1'>
+          <Card title='Feels Like' icon={<IconTemperature size={16} />}>
             {weatherData.current.app_temp}°C
           </Card>
-          <Card title='Humidity' icon={<IconTemperature size={16} />} className='row-span-1 col-span-1'>
-            <p className='text-xl'>{weatherData.current.rh}%</p>
+          <Card title='Humidity' icon={<IconTemperature size={16} />}>
+            <p>{weatherData.current.rh}%</p>
           </Card>
-          <Card title='Visibility' icon={<IconEye size={16} />} className='row-span-1 col-span-1'>
-            <p className='text-xl'>{weatherData.current.vis} mi</p>
+          <Card title='Visibility' icon={<IconEye size={16} />}>
+            <p>{weatherData.current.vis} mi</p>
           </Card>
-          <Card title='Pressure' icon={<IconDiamond size={16} />} className='row-span-1 col-span-1'>
+          <Card title='Pressure' icon={<IconDiamond size={16} />}>
             <p>{weatherData.current.pres} hPa</p>
           </Card>
         </div>
