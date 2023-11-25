@@ -15,7 +15,8 @@ function UVIndex({ data }: UVIndexProps) {
 
   return (
     <>
-      <p className='text-xl mb-2'>{roundedUV}  - {riskLevel}</p>
+      <p>{roundedUV}  - {riskLevel}</p>
+      {/*}
       <div className="flex w-full h-1.5 bg-gray-200 rounded-full overflow-hidden dark:bg-gray-700">
         <div 
           className="flex flex-col justify-center overflow-hidden bg-blue-500" 
@@ -25,7 +26,8 @@ function UVIndex({ data }: UVIndexProps) {
           aria-valuemin={0} 
           aria-valuemax={11}>
         </div>
-      </div>
+  </div>
+  */}
     </>
   );
 }
