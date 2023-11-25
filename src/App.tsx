@@ -17,13 +17,13 @@ function App() {
       const [currentWeatherResult, dailyForecastResult, hourlyForecastResult] = await Promise.all([
         fetchCurrentWeatherData(searchParams),
         fetchDailyForecast(searchParams),
-        fetchHourlyForecast(searchParams) // Fetch hourly data
+        fetchHourlyForecast(searchParams)
       ]);
   
       setWeatherData({
         current: currentWeatherResult.data.data[0],
         forecast: dailyForecastResult.data.data,
-        hourly: hourlyForecastResult.data.data, // Add hourly data to state
+        hourly: hourlyForecastResult.data.data,
         usingMockData: currentWeatherResult.isMock || dailyForecastResult.isMock || hourlyForecastResult.isMock
       });
     } catch (error: any) {
@@ -45,7 +45,7 @@ function App() {
     <>
       <div className='h-100 w-100 text-white'>
         <CurrentWeatherHeader data={weatherData.current} />
-        <div className='grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 p-20 gap-5'>
+        <div className='grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 p-3 md:p-20 gap-5'>
           <Card title='BLA BLA INFO' icon={<IconSun size={16} />} rows={1} cols={4}>
             <HourlyForecast data={weatherData.hourly} />
           </Card>
