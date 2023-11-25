@@ -40,7 +40,7 @@ const Day: React.FC<DayProps> = ({ day, isFirst }) => {
     const bgColorClass = getBackgroundColor(percentagePrecip);
 
     return (
-         <div className={`py-10 px-2 w-100 rounded-large text-xs bg-gray-700 text-center ${isFirst ? 'bg-gradient-to-b from-custom-start to-custom-end active shadow-2xl' : ''}`}>
+         <div className={`py-10 px-2 w-100 rounded-large text-xs text-center ${isFirst ? 'bg-gradient-to-b from-custom-start to-custom-end active shadow-2xl' : ''}`}>
             <div className='day-name mb-1 font-bold text-white'>
                 {isFirst ? 'Today' : getDayOfWeek(day.valid_date)}
             </div>
