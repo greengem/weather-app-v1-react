@@ -25,14 +25,12 @@ interface DayData {
 const Day: React.FC<DayProps> = ({ day, isFirst }) => {
 
     return (
-         <div className='text-sm flex w-full justify-between py-2'>
-            <div className='w-10'>
-                {isFirst ? 'Today' : getDayOfWeek(day.valid_date)}
-            </div>
-            <img src={`https://cdn.weatherbit.io/static/img/icons/${day.weather.icon}.png`} alt="Weather Icon" className='w-4 h-4' />
-            <div>{day.min_temp}°C</div>
-            <div>{day.max_temp}°C</div>
-        </div>
+      <tr className='text-sm font-semibold'>
+        <td className='w-1/4 pr-4 py-2'>{isFirst ? 'Today' : getDayOfWeek(day.valid_date)}</td>
+        <td className='w-1/4 px-4 py-2'><img src={`https://cdn.weatherbit.io/static/img/icons/${day.weather.icon}.png`} alt="Weather Icon" className='w-5 h-5' /></td>
+        <td className='w-1/4 px-4 py-2'>{day.min_temp}°C</td>
+        <td className='w-1/4 pl-4 py-2 text-right'>{day.max_temp}°C</td>
+      </tr>
     );
 }
 

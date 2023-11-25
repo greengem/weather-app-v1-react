@@ -19,13 +19,13 @@ interface WeeklyForecastProps {
 const WeeklyForecast: React.FC<WeeklyForecastProps> = ({ data }) => {
 
   return (
-    <div className="relative">
-      <div>
-        {data.slice(0, 10).map((day, index) => (
-          <Day day={day} isFirst={index === 0} key={day.valid_date} />
-        ))}
-      </div>
-    </div>
+      <table className='min-w-full table-auto'>
+        <tbody>
+          {data.slice(0, 10).map((day, index) => (
+            <Day day={day} isFirst={index === 0} key={day.valid_date} />
+          ))}
+        </tbody>
+      </table>
   );
 }
 
