@@ -5,7 +5,6 @@ interface HourData {
   temp: number;
 }
 
-
 interface HourlyForecastProps {
   data: HourData[] | null;
 }
@@ -16,7 +15,7 @@ const HourlyForecast: React.FC<HourlyForecastProps> = ({ data }) => {
   }
 
   return (
-    <div className="flex overflow-x-scroll no-scrollbar gap-2">
+    <div className="flex overflow-x-scroll no-scrollbar gap-5">
       {data.map((hour, index) => (
         <Hour key={index} hour={hour} />
       ))}

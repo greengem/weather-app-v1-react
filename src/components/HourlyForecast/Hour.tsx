@@ -9,7 +9,7 @@ interface HourData {
 
 const Hour: React.FC<HourProps> = ({ hour }) => {
     return(
-        <div className="text-center font-semibold space-y-5">
+        <div className="text-center font-semibold space-y-4">
             <div>{hour.time}</div>
             <div>Icon</div>
             <div>{hour.temp}</div>
