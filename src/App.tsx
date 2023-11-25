@@ -39,7 +39,6 @@ function App() {
     fetchData(searchParams);
   }
 
-
   const fetchData = async (searchParams: SearchParams) => {
     try {
       const [currentWeatherResult, dailyForecastResult] = await Promise.all([
@@ -56,9 +55,6 @@ function App() {
       // Handle unexpected errors
     }
   };
-  
-  
-  
 
   useEffect(() => {
     const defaultLocation = { lat: 51.5074, lon: -0.1278 };
@@ -71,13 +67,17 @@ function App() {
   }
 
   return (
-    <div className='bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen w-100 text-white'>
-      <nav className='nav bg-black px-5 py-3 text-white'>
+    <>
+    <nav className='nav bg-gray-900 border-b-2 border-gray-800 px-5 py-4 text-white shadow-md flex items-center justify-between'>
+      <p className='tracking-tight font-semibold text-xl'>WeatherApp</p>
+      <div className='flex gap-2'>
         <WeatherSearch onSearch={handleLocationSearch} />
-      </nav>
+      </div>
+    </nav>
+    <div className='h-100 w-100 text-white'>
       {weatherData.usingMockData && <div className="bg-red-500 hidden text-xs rounded-md px-2 py-1 absolute top-5 right-5">Displaying Mock Data</div>}
-      <div className='grid grid-cols-1 md:grid-cols-5'>
-          <div className='px-4 pt-4 dailyforecast-info col-span-1'>
+      <div className='grid grid-cols-1 lg:grid-cols-5 justify-center items-center'>
+          <div className='p-3 lg:p-5 dailyforecast-info col-span-1 lg:text-right'>
             <CurrentWeatherHeader data={weatherData.current} />
             <WeatherDetails data={weatherData.current} />
           </div>
@@ -89,14 +89,16 @@ function App() {
           </div>
       </div>
     </div>
+    </>
   );
 }
 
 function CurrentWeatherHeader({ data }: { data: CurrentWeatherData }) {
   return (
     <>
-      <h1 className='font-semibold text-4xl mb-1'>{data.city_name}, {data.country_code}</h1>
-      <p className='text-xs text-gray-400 mb-5'>{getFormattedDate()}</p>
+      <h1 className='font-semibold text-4xl'>{data.city_name}</h1>
+      <h1>{data.country_code}</h1>
+      <p className='text-xs text-gray-500'>{getFormattedDate()}</p>
     </>
   );
 }
@@ -105,7 +107,7 @@ function WeatherDetails({ data }: { data: CurrentWeatherData }) {
   return (
     <>
       <CurrentWeather data={data.temp} />
-      <div className='grid grid-cols-3 md:grid-cols-1'>
+      <div className='grid grid-cols-3 lg:grid-cols-1'>
         <FeelsLike data={data.app_temp} />
         <Rainfall data={data.precip} />
         <Pressure data={data.pres} />
@@ -116,7 +118,7 @@ function WeatherDetails({ data }: { data: CurrentWeatherData }) {
 
 function TodayHighlights({ data }: { data: CurrentWeatherData }) {
   return (
-    <div className='col-span-3 dailyforecastsummary-info p-5'>
+    <div className='col-span-3 dailyforecastsummary-info p-3 lg:p-5'>
         <UVIndex data={data.uv} />
         <Wind data={data} />
         <SunriseSunset data={data} />
