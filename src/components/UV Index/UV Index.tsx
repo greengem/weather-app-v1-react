@@ -4,7 +4,7 @@ interface UVIndexProps {
 
 function UVIndex({ data }: UVIndexProps) {
   const roundedUV = Math.round(data);
-  const uvPercentage = (roundedUV / 11) * 100;
+  //const uvPercentage = (roundedUV / 11) * 100;
   
   let riskLevel = '';
   if (roundedUV <= 2) riskLevel = 'Low';
