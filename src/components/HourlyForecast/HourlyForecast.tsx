@@ -1,14 +1,27 @@
-interface HourlyForecastProps {
-  data: string;
+import Hour from "./Hour";
+
+interface HourData {
+  time: string;
+  temp: number;
 }
 
-function HourlyForecast({ data }: HourlyForecastProps) {
+
+interface HourlyForecastProps {
+  data: HourData[] | null;
+}
+
+const HourlyForecast: React.FC<HourlyForecastProps> = ({ data }) => {
+  if (!data) {
+    return <div>No hourly data available.</div>;
+  }
+
   return (
-    <div className="hourlyforecast-info">
-      <h2>Hourly Forecast</h2>
-      <p>{data}</p>
+    <div className="flex overflow-x-scroll no-scrollbar gap-2">
+      {data.map((hour, index) => (
+        <Hour key={index} hour={hour} />
+      ))}
     </div>
   );
-}
+};
 
 export default HourlyForecast;

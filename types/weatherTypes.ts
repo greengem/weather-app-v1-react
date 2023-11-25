@@ -1,8 +1,15 @@
 export interface WeatherData {
     current: CurrentWeatherData | null;
     forecast: ForecastData[] | null;
+    hourly: HourlyForecastData[] | null;
     usingMockData: boolean;
 }
+
+export interface HourlyForecastData {
+    time: string;
+    temp: number;
+  }
+  
   
 export interface CurrentWeatherData {
     city_name: string;

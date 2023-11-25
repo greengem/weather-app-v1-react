@@ -2,6 +2,7 @@ import mockWeatherData from './mockData';
 
 const API_ENDPOINT_CURRENT = "https://api.weatherbit.io/v2.0/current";
 const API_ENDPOINT_DAILY = "https://api.weatherbit.io/v2.0/forecast/daily";
+const API_ENDPOINT_HOURLY = "https://api.weatherbit.io/v2.0/forecast/hourly";
 const API_KEY = import.meta.env.VITE_WEATHERBIT_API_KEY;
 
 interface Location {
@@ -57,6 +58,30 @@ export const fetchDailyForecast = async (location: Location, days: number = 7) =
 
     } catch {
         return { data: mockWeatherData.daily, isMock: true };
+    }
+};
+
+export const fetchHourlyForecast = async (location: Location) => {
+    try {
+        let endpoint = `${API_ENDPOINT_HOURLY}?key=${API_KEY}`;
+
+        if (location.lat && location.lon) {
+            endpoint += `&lat=${location.lat}&lon=${location.lon}`;
+        } else if (location.city) {
+            endpoint += `&city=${location.city}`;
+            if (location.state) endpoint += `,${location.state}`;
+            if (location.country) endpoint += `&country=${location.country}`;
+        }
+
+        const response = await fetch(endpoint);
+
+        if (response.status === 429 || !response.ok) {
+            return { data: mockWeatherData.hourly, isMock: true };
+        }
+        return { data: await response.json(), isMock: false };
+
+    } catch {
+        return { data: mockWeatherData.hourly, isMock: true };
     }
 };
 

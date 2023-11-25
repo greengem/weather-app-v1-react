@@ -1,6 +1,3 @@
-import { IconSun } from '@tabler/icons-react';
-import InfoBox from '../Layout/InfoBox';
-
 interface UVIndexProps {
   data: number;
 }
@@ -17,7 +14,7 @@ function UVIndex({ data }: UVIndexProps) {
   else riskLevel = 'Extreme';
 
   return (
-    <InfoBox title="UV Index" IconComponent={IconSun}>
+    <>
       <p className='text-xl mb-2'>{roundedUV}  - {riskLevel}</p>
       <div className="flex w-full h-1.5 bg-gray-200 rounded-full overflow-hidden dark:bg-gray-700">
         <div 
@@ -29,7 +26,7 @@ function UVIndex({ data }: UVIndexProps) {
           aria-valuemax={11}>
         </div>
       </div>
-    </InfoBox>
+    </>
   );
 }
 
