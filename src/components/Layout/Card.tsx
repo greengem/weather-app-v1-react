@@ -1,20 +1,24 @@
 import { ReactNode, FC } from 'react';
 
 interface CardProps {
-  title: string;
-  icon: ReactNode;
+  title?: string;
+  icon?: ReactNode;
   children: ReactNode;
-  rows?: number;
-  cols?: number;
+  className?: string;
 }
 
-const Card: FC<CardProps> = ({ title, icon, children, cols, rows }) => {
+const Card: FC<CardProps> = ({ title, icon, children, className }) => {
+  const defaultClasses = 'p-3 shadow-md bg-blue-700 text-white rounded-md';
+  const combinedClasses = `${defaultClasses} ${className || ''}`.trim();
+
   return (
-    <div className={`col-span-${cols || 1} row-span-${rows || 1} p-3 shadow-md bg-blue-700 text-white rounded-md`}>
-      <div className="flex text-xs gap-1 text-blue-200 mb-2">
-        <span>{icon}</span>
-        <span className='uppercase font-semibold'>{title}</span>
-      </div>
+    <div className={combinedClasses}>
+      {(icon || title) && (
+        <div className="flex text-xs gap-1 text-blue-200 mb-2">
+          {icon && <span>{icon}</span>}
+          {title && <span className='uppercase font-semibold'>{title}</span>}
+        </div>
+      )}
       <div className='text-xs'>
         {children}
       </div>
