@@ -40,7 +40,7 @@ const Day: React.FC<DayProps> = ({ day, isFirst }) => {
     const bgColorClass = getBackgroundColor(percentagePrecip);
 
     return (
-         <div className={`py-10 px-2 w-100 rounded-large text-xs text-center ${isFirst ? 'bg-gradient-to-b from-custom-start to-custom-end active shadow-2xl' : ''}`}>
+         <div className={`py-10 px-2 w-100 rounded-large text-xs text-center ${isFirst ? 'bg-gradient-to-b from-custom-start to-custom-end active shadow-md' : ''}`}>
             <div className='day-name mb-1 font-bold text-white'>
                 {isFirst ? 'Today' : getDayOfWeek(day.valid_date)}
             </div>
@@ -50,7 +50,7 @@ const Day: React.FC<DayProps> = ({ day, isFirst }) => {
             <img src={`https://cdn.weatherbit.io/static/img/icons/${day.weather.icon}.png`} alt="Weather Icon" className='day-image mb-6 h-auto inline' />
             <div className={`day-maxtemp mb-30 ${isFirst ? 'text-white' : 'text-gray-400'}`}>{day.max_temp}°C</div>
             <div className={`day-mintemp mb-5 ${isFirst ? 'text-white' : 'text-gray-400'}`}>{day.min_temp}°C</div>
-            <div className='text-gray-400 mb-4'><WindArrow direction={day.wind_dir} /> {day.wind_spd} m/s</div>
+            <div className='text-gray-400 mb-4 tracking-tighter'><WindArrow direction={day.wind_dir} /> {day.wind_spd} m/s</div>
             <div className={`${bgColorClass} text-white rounded-full inline items-center justify-center py-1 px-3 shadow-xl`}>
                 {percentagePrecip}%
             </div>
