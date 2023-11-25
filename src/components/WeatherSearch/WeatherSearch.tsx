@@ -17,14 +17,14 @@ const WeatherSearch: React.FC<WeatherSearchProps> = ({ onSearch }) => {
   };
 
   return (
-    <div className='mb-5 text-black'>
+    <div>
       <label htmlFor="hs-trailing-button-add-on-with-icon" className="sr-only">Search for a city</label>
-      <div className="flex rounded-md shadow-sm">
+      <div className="flex rounded-md">
         <input 
           type="text" 
           id="hs-trailing-button-add-on-with-icon" 
           name="hs-trailing-button-add-on-with-icon" 
-          className="py-3 px-4 block w-full border-gray-200 shadow-sm rounded-l-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400" 
+          className="py-2 px-4 block w-full border-gray-200 rounded-l-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400" 
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           onKeyDown={handleKeyDown}
