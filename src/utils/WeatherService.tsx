@@ -63,7 +63,7 @@ export const fetchDailyForecast = async (location: Location, days: number = 7) =
 
 export const fetchHourlyForecast = async (location: Location) => {
     try {
-        let endpoint = `${API_ENDPOINT_HOURLY}?key=${API_KEY}`;
+        let endpoint = `${API_ENDPOINT_HOURLY}?key=${API_KEY}&hours=24`;
 
         if (location.lat && location.lon) {
             endpoint += `&lat=${location.lat}&lon=${location.lon}`;
@@ -84,4 +84,3 @@ export const fetchHourlyForecast = async (location: Location) => {
         return { data: mockWeatherData.hourly, isMock: true };
     }
 };
-
