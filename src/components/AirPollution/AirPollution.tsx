@@ -8,7 +8,7 @@ interface AirPollutionProps {
 function AirPollution({ data }: AirPollutionProps) {
   return (
     <InfoBox title="Air Q" IconComponent={IconTrees}>
-      <p className='text-4xl'>{data}</p>
+      <p className='text-xl'>{data}</p>
     </InfoBox>
   );
 }
