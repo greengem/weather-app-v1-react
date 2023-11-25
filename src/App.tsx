@@ -71,19 +71,22 @@ function App() {
   }
 
   return (
-    <div className='bg-gradient-to-br from-gray-900 to-gray-800'>
+    <div className='bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen w-100 text-white'>
+      <nav className='nav bg-black px-5 py-3 text-white'>
+        <WeatherSearch onSearch={handleLocationSearch} />
+      </nav>
       {weatherData.usingMockData && <div className="bg-red-500 hidden text-xs rounded-md px-2 py-1 absolute top-5 right-5">Displaying Mock Data</div>}
       <div className='grid grid-cols-1 md:grid-cols-5'>
-          <div className='px-4 pt-4 dailyforecast-info col-span-1 bg-blue-800'>
-            <WeatherSearch onSearch={handleLocationSearch} />
+          <div className='px-4 pt-4 dailyforecast-info col-span-1'>
             <CurrentWeatherHeader data={weatherData.current} />
             <WeatherDetails data={weatherData.current} />
           </div>
-          <div className='col-span-3 bg-gray-500'>
+          <div className='col-span-3'>
             <WeeklyForecast data={weatherData.forecast} />
+          </div>
+          <div className='col-span-1'>
             <TodayHighlights data={weatherData.current} />
           </div>
-          <div className='bg-blue-500 col-span-1'>Right Sidebar</div>
       </div>
     </div>
   );
@@ -113,16 +116,13 @@ function WeatherDetails({ data }: { data: CurrentWeatherData }) {
 
 function TodayHighlights({ data }: { data: CurrentWeatherData }) {
   return (
-    <div className='col-span-3 row-span-2 p-4 sm:p-10  dailyforecastsummary-info'>
-      <h4 className='font-semibold text-lg mb-3'>Today's Highlights</h4>
-      <div className='grid grid-cols-2 md:grid-cols-3 grid-rows-2 gap-4'>
+    <div className='col-span-3 dailyforecastsummary-info p-5'>
         <UVIndex data={data.uv} />
         <Wind data={data} />
         <SunriseSunset data={data} />
         <Humidity data={data.rh} />
         <Visibility data={data.vis} />
         <AirPollution data={data.aqi} />
-      </div>
     </div>
   );
 }
