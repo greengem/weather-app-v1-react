@@ -6,10 +6,12 @@ export interface WeatherData {
 }
 
 export interface HourlyForecastData {
-    time: string;
-    temp: number;
-  }
-  
+  timestamp_local: string;
+  temp: number;
+  weather: {
+      icon: string;
+  };
+}
   
 export interface CurrentWeatherData {
     city_name: string;
