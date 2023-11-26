@@ -8,6 +8,7 @@ import UVIndex from './components/UV Index/UV Index';
 import Card from './components/Layout/Card';
 import { IconCalendar, IconDiamond, IconDropletFilled, IconEye, IconGrain, IconSun, IconSunrise, IconTemperature, IconUmbrella, IconWind } from '@tabler/icons-react';
 import HourlyForecast from './components/HourlyForecast/HourlyForecast';
+import AirPollution from './components/AirPollution/AirPollution';
 
 function App() {
   const [weatherData, setWeatherData] = useState<WeatherData>({ current: null, forecast: null, usingMockData: false, hourly: null });
@@ -45,23 +46,30 @@ function App() {
     <>
       <div className='h-100 w-100 text-white'>
         <CurrentWeatherHeader data={weatherData.current} />
+
+        {weatherData.usingMockData && (
+          <div className='text-red-500 text-center text-sm'>
+            API Limit reached, using mock data.
+          </div>
+        )}
+
         <div className='
           max-w-screen-xl mx-auto
           grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 
           p-4 md:p-5 
           gap-4 md:gap-5
         '>
-          <Card title='Daily weatehr overview text' icon={<IconSun size={16} />} className='md:col-span-4'>
+          <Card title={<span className='text-red-500'>Hourly API Limit reached, using mock data.</span>} icon={<IconSun size={16} />} className='md:col-span-4'>
             <HourlyForecast data={weatherData.hourly} />
           </Card>
-          <Card title='Precipitation' icon={<IconUmbrella size={16} />} className='md:row-span-2 md:col-span-2'>
+          <Card title='Precipitation' icon={<IconUmbrella size={16} />} className='md:row-span-2 md:col-span-2 hidden'>
               PRECIP MAP
           </Card>
           <Card title='10-Day Forecast' icon={<IconCalendar size={16} />} className='md:row-span-3 md:col-span-2'>
             <WeeklyForecast data={weatherData.forecast} />
           </Card>
           <Card title='Air Pollution' icon={<IconGrain size={16} />} className='md:col-span-2'>
-            <p className='text-xl'>{weatherData.current.aqi}</p>
+            <AirPollution aqi={weatherData.current.aqi} />
           </Card>
           <Card title='UV Index' icon={<IconSun size={16} />}>
             <UVIndex data={weatherData.current.uv} />
