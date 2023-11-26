@@ -16,3 +16,9 @@
 html {
   @apply bg-gradient-to-br from-gray-900 to-gray-800 text-white min-h-screen;
 }
+
+.one-line-text{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
