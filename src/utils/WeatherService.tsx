@@ -37,7 +37,7 @@ export const fetchCurrentWeatherData = async (location: Location) => {
     }
 };
 
-export const fetchDailyForecast = async (location: Location, days: number = 7) => {
+export const fetchDailyForecast = async (location: Location, days: number = 10) => {
     try {
         let endpoint = `${API_ENDPOINT_DAILY}?key=${API_KEY}&days=${days}`;
 
@@ -65,6 +65,8 @@ export const fetchHourlyForecast = async (location: Location) => {
     try {
         let endpoint = `${API_ENDPOINT_HOURLY}?key=${API_KEY}&hours=24`;
 
+        console.log(`Requesting hourly forecast data from endpoint: ${endpoint}`);
+        
         if (location.lat && location.lon) {
             endpoint += `&lat=${location.lat}&lon=${location.lon}`;
         } else if (location.city) {
@@ -74,13 +76,17 @@ export const fetchHourlyForecast = async (location: Location) => {
         }
 
         const response = await fetch(endpoint);
+        const result = await response.json();
 
         if (response.status === 429 || !response.ok) {
+            console.error(`API request failed with status: ${response.status}`);
+            console.error(`Error details: ${JSON.stringify(result)}`);
             return { data: mockWeatherData.hourly, isMock: true };
         }
-        return { data: await response.json(), isMock: false };
+        return { data: result, isMock: false };
 
-    } catch {
+    } catch (error) {
+        console.error(`An exception occurred: ${error}`);
         return { data: mockWeatherData.hourly, isMock: true };
     }
 };
