@@ -1,9 +1,13 @@
 import Hour from "./Hour";
 
 interface HourData {
-  time: string;
+  timestamp_local: string;
   temp: number;
+  weather: {
+      icon: string;
+  };
 }
+
 
 interface HourlyForecastProps {
   data: HourData[] | null;
