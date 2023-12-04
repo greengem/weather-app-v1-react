@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html{
+    background-color: #303030;   
+    color: #fff;
+}
+
+.mock-data-warning {
+    background-color: red;
+    color: white;
+    font-size: 24px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.day-image{
+    width: 32px;
+    height: auto;
+}
